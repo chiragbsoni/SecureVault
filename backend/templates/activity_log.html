@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% block title %}Activity Log | SecureVault{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+  <div class="card shadow-lg p-4 rounded-4 glass-effect border-0">
+    <div class="text-center mb-4">
+      <h4 class="fw-semibold text-black">📊 Recent Activity Logs</h4>
+      <p class="text-muted small mb-0">Track your account access and changes below.</p>
+    </div>
+
+    <div class="table-responsive">
+      <table class="table table-hover glass-table text-white rounded-3 overflow-hidden">
+        <thead class="table-light text-dark">
+          <tr>
+            <th>Activity</th>
+            <th>IP Address</th>
+            <th>Device</th>
+            <th>Timestamp</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for log in logs %}
+          <tr>
+            <td>{{ log.activity_type }}</td>
+            <td>{{ log.ip_address }}</td>
+            <td>{{ log.device }}</td>
+            <td>
+                <span class="timestamp" data-utc="{{ log.timestamp|date:'c' }}" title="UTC: {{ log.timestamp|date:'c' }}"></span>
+            </td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="4" class="text-center text-muted">No activity logs found.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+
+{% block extra_scripts %}
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const timestamps = document.querySelectorAll('.timestamp');
+    timestamps.forEach(el => {
+      const utc = el.getAttribute('data-utc');
+      if (utc) {
+        try {
+          const local = new Date(utc).toLocaleString(undefined, {
+            dateStyle: "medium",
+            timeStyle: "short"
+          });
+          el.innerText = local + " (" + Intl.DateTimeFormat().resolvedOptions().timeZone + ")";
+        } catch (e) {
+          el.innerText = "Invalid timestamp";
+        }
+      } else {
+        el.innerText = "No timestamp";
+      }
+    });
+  });
+</script>
+{% endblock %}

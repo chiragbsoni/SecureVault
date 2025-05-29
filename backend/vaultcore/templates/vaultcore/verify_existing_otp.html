@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block title %}Verify OTP | SecureVault{% endblock %}
+{% block content %}
+<div class="glass-card mx-auto" style="max-width: 420px;">
+  <h3 class="text-center mb-3">📲 Enter OTP Code</h3>
+  <p>Open your authenticator app and enter the 6-digit code.</p>
+
+  <form method="post">
+    {% csrf_token %}
+    <div class="mb-3">
+      <label for="otp_code" class="form-label">OTP Code</label>
+      <input type="text" name="otp_code" class="form-control" required>
+    </div>
+    {% if error %}
+    <div class="alert alert-danger mt-3">{{ error }}</div>
+    {% endif %}
+    <button class="btn btn-primary w-100" type="submit">Verify</button>
+  </form>
+
+  <hr class="my-4">
+  <div class="text-center">
+    <p class="mb-2">⚠️ Lost access to your 2FA device?</p>
+    <form method="post" action="{% url 'vaultcore:enter_secondary' %}">
+      {% csrf_token %}
+      <button class="btn btn-link text-danger">Click here to continue with email or username</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

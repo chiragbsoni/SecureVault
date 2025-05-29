@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}Verify Identity | SecureVault{% endblock %}
+{% block content %}
+<div class="glass-card mx-auto" style="max-width: 420px;">
+  <h3 class="text-center mb-3">🧩 Verify Identity</h3>
+  <p>As you don't have 2FA, we need another identifier to verify your identity.<br>
+     Please enter your <strong>{% if is_email %}username{% else %}email{% endif %}</strong> to continue verification.</p>
+
+  <form method="post">
+    {% csrf_token %}
+    <div class="mb-3">
+      <label for="secondary">Enter your {% if is_email %}Username{% else %}Email{% endif %}</label>
+      <input type="text" name="secondary" class="form-control" required>
+    </div>
+    <button class="btn btn-warning w-100" type="submit">Continue</button>
+  </form>
+
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert alert-danger mt-3">{{ message }}</div>
+    {% endfor %}
+  {% endif %}
+</div>
+{% endblock %}

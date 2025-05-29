@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% block title %}Welcome | SecureVault{% endblock %}
+{% block content %}
+
+<!-- Welcome section -->
+<div class="text-center mb-5">
+  <h1 class="fw-bold mb-2">
+    🔐 <span class="text-primary">Welcome to SecureVault</span>
+  </h1>
+  <p class="lead text-muted"><b>
+    Your personal password manager with military-grade AES encryption, 2FA, and real-time tracking.
+  </b></p>
+  
+</div>
+
+<!-- Features Section -->
+<!-- Features Section -->
+<div class="glass-card mx-auto mb-4" style="max-width: 960px;">
+  <h4 class="mb-4 text-primary"><i class="bi bi-tools me-2"></i>Features</h4>
+  <div class="row row-cols-1 row-cols-md-2 g-3">
+
+    <div class="col">
+      <div class="d-flex align-items-center">
+        <i class="bi bi-shield-lock fs-5 me-2 text-success"></i>
+        <span class="fw-medium text-dark">Secure AES-encrypted password storage</span>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="d-flex align-items-center">
+        <i class="bi bi-lock-fill fs-5 me-2 text-success"></i>
+        <span class="fw-medium text-dark">Time-based One-Time Password (TOTP) for 2FA</span>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="d-flex align-items-center">
+        <i class="bi bi-activity fs-5 me-2 text-success"></i>
+        <span class="fw-medium text-dark">Real-time activity logging with device fingerprinting</span>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="d-flex align-items-center">
+        <i class="bi bi-envelope-check fs-5 me-2 text-success"></i>
+        <span class="fw-medium text-dark">Password reset via email and username</span>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="d-flex align-items-center">
+        <i class="bi bi-display fs-5 me-2 text-success"></i>
+        <span class="fw-medium text-dark">Modern glassmorphic UI with responsive design</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- About the Developer Section -->
+<div class="glass-card mx-auto" style="max-width: 960px;">
+  <h4 class="mb-3 text-primary"><i class="bi bi-person-workspace me-2"></i>About the Developer</h4>
+  <ul class="list-unstyled text-dark">
+    <li><strong>Name:</strong> Chirag Bhaveshkumar Soni</li>
+    <li><strong>Program:</strong> MS in Cybersecurity – Wright State University</li>
+    <li><strong>Background:</strong> B.Tech in Computer Science. Skilled in Django, cryptography, and secure systems.</li>
+    <li><strong>Previous Roles:</strong> Intern at DEC Gaming Studio | Cybersecurity Projects Contributor</li>
+    <li><strong>Focus:</strong> Privacy-first apps, secure infrastructure, and data-driven cybersecurity platforms</li>
+  </ul>
+</div>
+
+{% endblock %}

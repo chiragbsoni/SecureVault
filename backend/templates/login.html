@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block title %}Login | SecureVault{% endblock %}
+{% block content %}
+
+<div class="glass-card mx-auto" style="max-width: 420px;">
+  <div class="text-center mb-4">
+    <h3 class="fw-bold mb-1">🔐 SecureVault Login</h3>
+    <p class="text-muted">Access your vault securely</p>
+  </div>
+
+  <form method="post" action="/account/login/">
+    {% csrf_token %}
+
+    <div class="mb-3">
+      <label for="id_username" class="form-label">Username</label>
+      <input type="text" name="username" class="form-control" id="id_username" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="id_password" class="form-label">Password</label>
+      <input type="password" name="password" class="form-control" id="id_password" required>
+    </div>
+
+    <input type="hidden" name="timezone" id="timezone">
+
+    <button type="submit" class="btn btn-primary w-100">Login</button>
+
+    {% if form.errors %}
+      <div class="alert alert-danger mt-3 mb-0" role="alert">
+        {% if form.non_field_errors %}
+          {{ form.non_field_errors|striptags }}
+        {% else %}
+          Invalid credentials. Please try again.
+        {% endif %}
+      </div>
+    {% endif %}
+  </form>
+
+  <div class="mt-3 text-center">
+    <a href="{% url 'vaultcore:custom_reset' %}" class="d-block mb-1">🔁 Forgot your password?</a>
+    <span class="text-muted">Don't have an account?</span>
+    <a href="{% url 'register' %}" class="ms-1">Register here</a>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const timezoneInput = document.getElementById("timezone");
+    if (timezoneInput) {
+      timezoneInput.value = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    }
+  });
+</script>
+
+{% endblock %}

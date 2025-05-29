@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard | SecureVault{% endblock %}
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h3 class="fw-bold text-primary">🔐 Stored Credentials</h3>
+    <div class="d-flex">
+        <a href="{% url 'vaultcore:add_credential' %}" class="btn btn-outline-primary me-2">➕ Add Credential</a>
+        <button onclick="exportToCSV()" class="btn btn-outline-success">📤 Export CSV</button>
+    </div>
+</div>
+
+<div class="glass-card">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h5 class="mb-0 fw-semibold text-dark">Search & Manage</h5>
+        <input type="text" id="searchInput" class="form-control w-50" placeholder="🔎 Search website or username">
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-hover align-middle" id="credentialData">
+            <thead class="table-light text-center">
+                <tr>
+                    <th>🌐 Website</th>
+                    <th>👤 Username</th>
+                    <th>🔑 Password</th>
+                    <th>📝 Notes</th>
+                    <th>⚙️ Actions</th>
+                </tr>
+            </thead>
+            <tbody id="credentialTable">
+                {% for c in credentials %}
+                <tr class="text-center">
+                    <td>{{ c.website }}</td>
+                    <td>{{ c.login_username }}</td>
+                    <td>
+                        <div class="d-flex justify-content-center align-items-center">
+                            <input id="pw-{{ c.id }}" type="password" value="{{ c.password }}" class="form-control form-control-sm text-center me-2" style="max-width: 130px;" readonly>
+                            <button class="btn btn-sm btn-outline-secondary me-1" onclick="togglePassword('{{ c.id }}')">
+                                <i id="eye-{{ c.id }}" class="bi bi-eye"></i>
+                            </button>
+                            <button class="btn btn-sm btn-outline-info" onclick="copyPassword('{{ c.id }}')">
+                                <i class="bi bi-clipboard"></i>
+                            </button>
+                        </div>
+                    </td>
+                    <td>{{ c.notes|default:"—" }}</td>
+                    <td>
+                        <a href="{% url 'vaultcore:edit_credential' c.id %}" class="btn btn-sm btn-outline-secondary me-1">✏️</a>
+                        <a href="{% url 'vaultcore:delete_credential' c.id %}" class="btn btn-sm btn-outline-danger">🗑️</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+// 🔍 Search functionality
+document.getElementById('searchInput').addEventListener('keyup', function () {
+    const input = this.value.toLowerCase();
+    const rows = document.querySelectorAll('#credentialTable tr');
+    rows.forEach(row => {
+        const text = row.innerText.toLowerCase();
+        row.style.display = text.includes(input) ? '' : 'none';
+    });
+});
+
+// 👁 Toggle password visibility
+function togglePassword(id) {
+    const input = document.getElementById('pw-' + id);
+    const icon = document.getElementById('eye-' + id);
+    if (input.type === "password") {
+        input.type = "text";
+        icon.classList.replace('bi-eye', 'bi-eye-slash');
+    } else {
+        input.type = "password";
+        icon.classList.replace('bi-eye-slash', 'bi-eye');
+    }
+}
+
+// 📋 Copy password to clipboard
+function copyPassword(id) {
+    const input = document.getElementById('pw-' + id);
+    navigator.clipboard.writeText(input.value).then(() => {
+        alert("Password copied to clipboard");
+    }).catch(err => {
+        console.error("Copy failed: ", err);
+    });
+}
+
+// 📤 Export credentials to CSV
+function exportToCSV() {
+    const table = document.getElementById("credentialData");
+    let csv = [];
+
+    for (let row of table.rows) {
+        let cols = Array.from(row.cells).map(col => `"${col.innerText.replace(/"/g, '""')}"`);
+        csv.push(cols.join(","));
+    }
+
+    const csvBlob = new Blob([csv.join("\n")], { type: "text/csv" });
+    const url = URL.createObjectURL(csvBlob);
+
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "securevault_credentials.csv";
+    link.click();
+
+    URL.revokeObjectURL(url);
+}
+</script>
+
+{% endblock %}

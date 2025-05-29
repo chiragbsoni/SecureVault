@@ -1,0 +1,26 @@
+# Byte-compiled files
+__pycache__/
+*.py[cod]
+
+# Virtual environment
+venv/
+ENV/
+
+# OS junk
+.DS_Store
+
+# Logs
+logs/
+
+# DB setup (optional)
+database/*.db
+*.sqlite3
+
+# Secrets and env
+.env
+
+# VS Code
+.vscode/
+
+# Compiled files
+*.log

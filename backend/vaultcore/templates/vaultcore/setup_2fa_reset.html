@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}Setup 2FA | SecureVault{% endblock %}
+{% block content %}
+<div class="glass-card mx-auto" style="max-width: 420px;">
+  <h3 class="text-center mb-3">🔐 Set Up Two-Factor Authentication</h3>
+  <p>Scan this QR code with Google Authenticator and enter the code.</p>
+  <img src="data:image/png;base64,{{ qr }}" alt="QR Code" class="mb-3" width="200">
+  <form method="post">
+    {% csrf_token %}
+    <input type="hidden" name="user_id" value="{{ user_id }}">
+    <input type="text" name="otp_code" class="form-control mb-3" placeholder="Enter OTP code" required>
+    <button class="btn btn-primary w-100">Verify & Continue</button>
+  </form>
+</div>
+{% endblock %}

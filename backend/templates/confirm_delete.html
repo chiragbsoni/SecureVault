@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}Confirm Delete | SecureVault{% endblock %}
+
+{% block content %}
+<div class="glass-card text-center" style="max-width: 500px; margin: auto;">
+    <h3 class="mb-4 text-danger">⚠️ Confirm Deletion</h3>
+    <p>Are you sure you want to delete the credential for:</p>
+    <p><strong>{{ credential.website }}</strong> - {{ credential.login_username }}</p>
+
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger me-2">Yes, Delete</button>
+        <a href="{% url 'vaultcore:dashboard' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}
