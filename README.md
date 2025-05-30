@@ -176,7 +176,7 @@ Passwords must:
 ### 👨‍💻 Developer
 
 **Chirag Bhaveshkumar Soni**  
-🎓 *MS in Cybersecurity with CYberDefence Concentration – Wright State University*  
+🎓 *MS in Cybersecurity with CyberDefence Concentration – Wright State University*  
 💼 *Django, Cybersecurity, Secure Systems*  
 🔗 [LinkedIn](https://www.linkedin.com/in/cbsoni) • [GitHub](https://github.com/chiragbsoni)
 
